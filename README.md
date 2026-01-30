@@ -18,13 +18,35 @@ A Claude Code skill for reviewing contracts in Traditional Chinese. Quickly extr
 
 ## 📦 Installation 安裝
 
-將 skill 資料夾複製到你的 Claude Code skills 目錄：
+### 方法一：透過 Git Clone（推薦）
 
 ```bash
-cp -r contract-reviewer ~/.claude/skills/user/
+# 1. Clone 此 repo
+git clone https://github.com/lotushj1/claude-skill-contract-reviewer.git
+
+# 2. 建立 skills 目錄（如果還沒有的話）
+mkdir -p ~/.claude/skills/user/
+
+# 3. 將 skill 資料夾複製到 Claude Code skills 目錄
+cp -r claude-skill-contract-reviewer/contract-reviewer ~/.claude/skills/user/
 ```
 
-或手動下載後放入 skills 目錄。
+### 方法二：手動下載
+
+1. 從 [Releases](https://github.com/lotushj1/claude-skill-contract-reviewer/releases) 頁面下載最新版本，或直接下載 `contract-reviewer` 資料夾
+2. 將 `contract-reviewer` 資料夾放入 `~/.claude/skills/user/` 目錄
+
+### 驗證安裝
+
+安裝完成後，確認檔案結構如下：
+
+```
+~/.claude/skills/user/
+└── contract-reviewer/
+    ├── SKILL.md
+    └── references/
+        └── risk-patterns.md
+```
 
 ---
 
