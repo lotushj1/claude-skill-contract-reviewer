@@ -1,143 +1,61 @@
-# Contract Reviewer Skill 合約審核助手
+# Contract Reviewer：幫你看合約的 AI 助手
 
-A Claude Code skill for reviewing contracts in Traditional Chinese. Quickly extracts key terms, highlights unfair clauses, and generates structured summaries.
+## 這是什麼？
 
-一個用於審閱合約的 Claude Code 技能。快速提取關鍵條款、標記不公平內容、產出結構化摘要報告。
+一個讓 AI 幫你審合約的技能包（Skill），專為繁體中文合約設計。
 
----
+接案或合作要簽約時，整份合約密密麻麻，你最想知道的其實就三件事：**重點是什麼、有沒有坑、跟講好的一不一樣**。這個 skill 就是幫你回答這三件事。
 
-## ✨ Features 功能特色
+## 它會幫你做什麼？
 
-- 📋 **自動提取合約重點** — 雙方資訊、費用、日期、義務一目瞭然
-- ⚠️ **風險條款標記** — 自動識別高/中風險條款並提供修改建議
-- 🟢 **有利條款辨識** — 標出對你有保障的條款
-- 📝 **結構化摘要報告** — 便於存檔與後續查閱
-- 🇹🇼 **繁體中文優化** — 針對台灣常見合約用語設計
+1. **抓重點**：雙方是誰、多少錢、什麼時候付、什麼時候交、做什麼、違約怎麼算，整理成一目瞭然的摘要
+2. **標出坑**：對照內建的風險條款資料庫，把不公平的條款標出來（🔴 危險、🟡 要注意、🟢 對你有利），每條都附「建議怎麼改」
+3. **比對版本**：對方回傳「幫你調整了一些用字」的修改版？丟兩個版本給它，它逐條比對，把**沒說出口的偷改**全部抓出來
+4. **核對報價**：報價單的金額加總對不對、含稅未稅有沒有矛盾、合約寫的錢跟報價單一不一樣
 
----
+特別針對**設計與行銷接案**加強：授權範圍是不是偷偷變成買斷、修改次數是不是變成「改到滿意為止」、有沒有「隨時終止不用付錢」這種條款，都在檢查清單裡。
 
-## 📦 Installation 安裝
+## 怎麼用？
 
-### 方法一：透過 Git Clone（推薦）
+安裝後，把合約（PDF 或文字）丟給 Claude，說：
 
-```bash
-# 1. Clone 此 repo
-git clone https://github.com/lotushj1/claude-skill-contract-reviewer.git
+- 「幫我看這份合約」
+- 「這份合約有沒有問題」
+- 「這兩個版本差在哪」（丟兩份）
+- 「幫我對一下報價單跟合約」（丟報價單＋合約）
 
-# 2. 建立 skills 目錄（如果還沒有的話）
-mkdir -p ~/.claude/skills/user/
+也可以用快速指令：`/review` 完整報告、`/summary` 只要摘要、`/risk` 只看風險、`/compare` 版本比對。
 
-# 3. 將 skill 資料夾複製到 Claude Code skills 目錄
-cp -r claude-skill-contract-reviewer/contract-reviewer ~/.claude/skills/user/
-```
+## 想先練習？內附教學案例
 
-### 方法二：手動下載
+`contract-reviewer/examples/virtual-case/` 是一組虛構的設計接案情境，包含：
 
-1. 從 [Releases](https://github.com/lotushj1/claude-skill-contract-reviewer/releases) 頁面下載最新版本，或直接下載 `contract-reviewer` 資料夾
-2. 將 `contract-reviewer` 資料夾放入 `~/.claude/skills/user/` 目錄
+- 一份報價單（藏了 2 個問題）
+- 一份合約初版（大致公平，可以當「正常合約長怎樣」的參考）
+- 一份客戶宣稱「只是調整用字」的修改版（偷改了 8 個地方）
+- 一份解答（先別看，測測你和 AI 能不能全部抓到）
 
-### 驗證安裝
+拿這組檔案照上面的用法跑一遍，就知道這個 skill 怎麼用了。
 
-安裝完成後，確認檔案結構如下：
+## 安裝
 
-```
-~/.claude/skills/user/
-└── contract-reviewer/
-    ├── SKILL.md
-    └── references/
-        └── risk-patterns.md
-```
-
----
-
-## 🚀 Usage 使用方式
-
-### 觸發方式
-
-- 上傳合約 PDF 檔案
-- 直接貼上合約文字
-- 使用觸發詞：
-  - 「審合約」「看合約」「合約重點」
-  - `contract review`
-
-### 快速指令
-
-| 指令 | 功能 |
-|------|------|
-| `/review` | 完整審閱，輸出摘要報告 |
-| `/summary` | 只輸出重點摘要 |
-| `/risk` | 只檢查風險條款 |
-| `/compare` | 比較兩份合約差異 |
-
----
-
-## 📊 Output Example 輸出範例
-
-審閱後會產出結構化報告，包含：
+把 `contract-reviewer` 資料夾放進：
 
 ```
-📋 合約摘要報告
-├── 🏢 雙方資訊（名稱、統編、聯絡人）
-├── 💰 費用條款（金額、付款時間、方式）
-├── 📅 重要日程（生效日、交付日、終止日）
-├── ⚖️ 雙方義務
-├── ⚠️ 特別注意事項
-│   ├── 🔴 高風險條款
-│   ├── 🟡 中風險條款
-│   └── 🟢 對你有利的條款
-└── ✅ 審核結論與建議行動
+~/.claude/skills/
 ```
 
----
-
-## 🔍 Risk Patterns 風險檢查項目
-
-### 🔴 高風險條款
-- 單方面修改權
-- 無上限賠償責任
-- 過高違約金（超過 30%）
-- 廣泛的智財移轉
-- 競業禁止條款
-- 無條件終止權僅給一方
-
-### 🟡 中風險條款
-- 模糊的工作範圍
-- 無限修改義務
-- 自動續約條款
-- 過長的保密期限
-- 片面的驗收標準
-
----
-
-## 📁 File Structure 檔案結構
+放好後結構長這樣：
 
 ```
-contract-reviewer/
-├── SKILL.md              # 主要技能定義與輸出格式
-└── references/
-    └── risk-patterns.md  # 風險模式參考資料庫
+~/.claude/skills/contract-reviewer/
+├── SKILL.md
+├── references/
+│   └── risk-patterns.md
+└── examples/
+    └── virtual-case/
 ```
 
----
+## 重要提醒
 
-## ⚠️ Disclaimer 免責聲明
-
-此工具僅供參考，不構成法律建議。重要合約請諮詢專業律師。
-
-This tool is for reference only and does not constitute legal advice. Please consult a professional lawyer for important contracts.
-
----
-
-## 📄 License
-
-MIT
-
----
-
-## 🤝 Contributing
-
-歡迎提交 Issue 或 PR 來改善這個 Skill！
-
-- 新增更多風險模式
-- 支援更多合約類型
-- 改善輸出格式
+AI 的審閱結果**僅供參考，不是法律意見**。它幫你快速看懂合約、找出該注意的地方，但重要的合約簽之前，還是要請教專業律師。
